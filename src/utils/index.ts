@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
 
-export const isFalsy = (value) => (value === 0 ? true : !value);
+export const isFalsy = (value: unknown) => (value === 0 ? true : !value);
 
 //排除0的情况
-export const cleanObject = (param) => {
+export const cleanObject = (param: object) => {
   const result = { ...param };
   Object.keys(param).forEach((key) => {
     const value = result[key];
@@ -14,13 +14,13 @@ export const cleanObject = (param) => {
   return result;
 };
 
-export const useMount = (callback) => {
+export const useMount = (callback: () => void) => {
   useEffect(() => {
     callback();
   }, []);
 };
 
-export const useDebounce = (value, delay) => {
+export const useDebounce = (value: unknown, delay?: number) => {
   const [debouncedValue, setDebouncedValue] = useState(value);
 
   useEffect(() => {
