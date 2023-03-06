@@ -2,6 +2,8 @@ import React, { FormEvent, memo } from "react";
 
 const apiUrl = process.env.REACT_APP_API_URL;
 
+//鸭子类型: 面向接口编程 而不是面向对象编程
+
 const LoginScreen = memo(() => {
   const login = (param: { username: string; password: string }) => {
     fetch(`${apiUrl}/login`, {
