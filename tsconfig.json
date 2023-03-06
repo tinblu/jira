@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "baseUrl": "/src",
+    "baseUrl": "src",
     "target": "es5",
     "lib": [
       "dom",
@@ -8,6 +8,7 @@
       "esnext"
     ],
     "allowJs": true,
+    "checkJs": false,
     "skipLibCheck": true,
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
