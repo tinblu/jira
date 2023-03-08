@@ -1,5 +1,6 @@
 import qs from "qs";
 import * as auth from "auth_provider";
+import { useAuth } from "context/auth-context";
 
 const apiUrl = process.env.REACT_APP_API_URL;
 
@@ -7,9 +8,10 @@ interface Config extends RequestInit {
   token?: string;
   data?: object;
 }
+// 用fetch抽象通用HTTP请求方法，增强通用性
 export const http = async (
   endpoint: string,
-  { data, token, headers, ...customConfig }: Config
+  { data, token, headers, ...customConfig }: Config = {}
 ) => {
   const config = {
     method: "GET",
@@ -43,4 +45,12 @@ export const http = async (
         return Promise.reject(data); //需要手动抛出异常 fetch的catch不会捕捉到500、401等报错，只会在断网或者网络异常时抛出，但这个概率很小
       }
     });
+};
+
+//用useHttp管理JWT和登录状态，保持登录状态
+export const useHttp = () => {
+  const { user } = useAuth();
+  //TS操作符
+  return (...[endpoint, config]: Parameters<typeof http>) =>
+    http(endpoint, { ...config, token: user?.token });
 };
