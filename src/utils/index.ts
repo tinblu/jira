@@ -1,13 +1,20 @@
 import { useEffect, useState } from "react";
 
+/* 自定义hook文件 */
 export const isFalsy = (value: unknown) => (value === 0 ? true : !value);
+export const isVoid = (value: unknown) =>
+  value === undefined || value === null || value === "";
 
 //排除0的情况
-export const cleanObject = (param: object) => {
-  const result = { ...param };
-  Object.keys(param).forEach((key) => {
+export const cleanObject = (object?: { [key: string]: unknown }) => {
+  // Object.assign({}, object)
+  if (!object) {
+    return {};
+  }
+  const result = { ...object };
+  Object.keys(result).forEach((key) => {
     const value = result[key];
-    if (isFalsy(value)) {
+    if (isVoid(value)) {
       delete result[key];
     }
   });
@@ -21,6 +28,7 @@ export const useMount = (callback: () => void) => {
 };
 
 export const useDebounce = (value: unknown, delay?: number) => {
+  //用useDebounce减少工程搜索请求频率
   const [debouncedValue, setDebouncedValue] = useState(value);
 
   useEffect(() => {

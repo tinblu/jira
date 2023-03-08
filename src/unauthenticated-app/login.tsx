@@ -1,3 +1,4 @@
+import { useAuth } from "context/auth-context";
 import React, { FormEvent, memo } from "react";
 
 const apiUrl = process.env.REACT_APP_API_URL;
@@ -5,18 +6,7 @@ const apiUrl = process.env.REACT_APP_API_URL;
 //鸭子类型: 面向接口编程 而不是面向对象编程
 
 const LoginScreen = memo(() => {
-  const login = (param: { username: string; password: string }) => {
-    fetch(`${apiUrl}/login`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(param),
-    }).then(async (response: Response) => {
-      if (response.ok) {
-      }
-    });
-  };
+  const { login, user } = useAuth();
 
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault(); //阻止表单提交的默认行为
